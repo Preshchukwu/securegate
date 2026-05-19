@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { forgotPasswordSchema } from "@/lib/validations";
 import { generateToken } from "@/lib/tokens";
 import { sendPasswordResetEmail } from "@/lib/email";
-import { forgotPasswordLimiter, getRateLimitResponse, getClientIp } from "@/lib/rate-limit";
+import { applyForgotPasswordRateLimit } from "@/lib/rate-limit";
 
 const SUCCESS_RESPONSE = {
   success: true,
@@ -11,8 +11,8 @@ const SUCCESS_RESPONSE = {
 };
 
 export async function POST(req: Request) {
-  const { success, reset } = await forgotPasswordLimiter.limit(getClientIp(req));
-  if (!success) return getRateLimitResponse(reset);
+  const limited = await applyForgotPasswordRateLimit(req);
+  if (limited) return limited;
 
   try {
     const body = await req.json();

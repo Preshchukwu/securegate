@@ -1,7 +1,6 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
@@ -12,7 +11,6 @@ import { signUpSchema, type SignUpInput } from "@/lib/validations";
 type FieldErrors = Partial<Record<keyof SignUpInput, string>>;
 
 export function SignUpForm() {
-  const router = useRouter();
   const [values, setValues] = useState({ name: "", email: "", password: "", confirmPassword: "" });
   const [errors, setErrors] = useState<FieldErrors>({});
   const [serverError, setServerError] = useState("");
