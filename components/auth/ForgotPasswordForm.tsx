@@ -1,29 +1,52 @@
 "use client";
 
-import { useState } from "react";
-import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { Alert } from "@/components/ui/Alert";
+import type { AuthView } from "./AuthCard";
 
-export function ForgotPasswordForm() {
-  const [email, setEmail] = useState("");
+interface Props { onSwitch: (view: AuthView) => void }
+
+export function ForgotPasswordForm({ onSwitch }: Props) {
+  const firstRef = useRef<HTMLInputElement>(null);
+  const [email,   setEmail]   = useState("");
+  const [error,   setError]   = useState("");
+  const [touched, setTouched] = useState(false);
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
 
+  useEffect(() => { firstRef.current?.focus(); }, []);
+
+  function validate(val: string): string {
+    if (!val)                               return "Email is required";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)) return "Enter a valid email address";
+    return "";
+  }
+
+  function handleChange(val: string) {
+    setEmail(val);
+    if (touched) setError(validate(val));
+  }
+
+  function handleBlur() {
+    setTouched(true);
+    setError(validate(email));
+  }
+
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setLoading(true);
+    const err = validate(email);
+    if (err) { setError(err); setTouched(true); return; }
 
+    setLoading(true);
     try {
       await fetch("/api/forgot-password", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
-    } catch {
-      // Always show success — do not leak errors
-    } finally {
+    } catch { /* always show success */ } finally {
       setLoading(false);
       setSubmitted(true);
     }
@@ -31,32 +54,48 @@ export function ForgotPasswordForm() {
 
   if (submitted) {
     return (
-      <Alert variant="success">
-        If an account exists for that email, a reset link has been sent. Check your inbox.
-      </Alert>
+      <div className="space-y-4">
+        <Alert variant="success">
+          If an account exists for that email, a reset link has been sent. Check your inbox.
+        </Alert>
+        <p className="text-center text-sm text-[var(--md-sys-color-outline)]">
+          <button
+            type="button"
+            onClick={() => onSwitch("login")}
+            className="text-[var(--md-sys-color-primary)] font-medium hover:underline focus:outline-none"
+          >
+            Back to sign in
+          </button>
+        </p>
+      </div>
     );
   }
 
   return (
     <form onSubmit={handleSubmit} noValidate className="space-y-4">
       <Input
+        ref={firstRef}
         label="Email address"
         type="email"
         autoComplete="email"
         value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        helperText="Enter the email associated with your account."
+        onChange={(e) => handleChange(e.target.value)}
+        onBlur={handleBlur}
+        error={touched ? error : undefined}
+        helperText="We'll send a reset link to this address."
       />
 
-      <Button type="submit" loading={loading} className="w-full">
-        Send reset link
-      </Button>
+      <Button type="submit" loading={loading} className="w-full">Send reset link</Button>
 
       <p className="text-center text-sm text-[var(--md-sys-color-outline)]">
         Remember your password?{" "}
-        <Link href="/login" className="text-[var(--md-sys-color-primary)] font-medium hover:underline">
+        <button
+          type="button"
+          onClick={() => onSwitch("login")}
+          className="text-[var(--md-sys-color-primary)] font-medium hover:underline focus:outline-none"
+        >
           Sign in
-        </Link>
+        </button>
       </p>
     </form>
   );
