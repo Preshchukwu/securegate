@@ -2,7 +2,7 @@ import { Resend } from "resend";
 import { VerificationEmail } from "@/emails/VerificationEmail";
 import { PasswordResetEmail } from "@/emails/PasswordResetEmail";
 
-const FROM = "SecureGate <noreply@yourdomain.com>";
+const FROM = "SecureGate <onboarding@resend.dev>";
 
 function getResend() {
   if (!process.env.RESEND_API_KEY) throw new Error("RESEND_API_KEY is not set");
