@@ -1,0 +1,594 @@
+/* ============================================================
+   SecureGate — Design Tokens
+   Single source of truth for all CSS variables.
+   Material Design 3 · Inter · Light + Dark
+
+   Structure:
+   1. Font Import
+   2. Primitive Color Palettes
+   3. Color Roles — Light Theme  (:root)
+   4. Color Roles — Dark Theme   ([data-theme="dark"])
+   5. System Dark Mode Override  (@media prefers-color-scheme)
+   6. Extended Semantic Roles (app-specific)
+   7. Typography Scale
+   8. Spacing
+   9. Border Radius
+   10. Elevation / Shadow
+   11. Motion & Transitions
+   12. Z-Index
+   13. Breakpoints
+   ============================================================ */
+
+/* ============================================================
+   1. FONT IMPORT
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+
+/* ============================================================
+   2. PRIMITIVE COLOR PALETTES
+   Raw tonal palettes — DO NOT use these directly in components.
+   Reference color roles (section 3–6) in all component styles.
+   ============================================================ */
+
+:root {
+
+  /* --- Primary: Blue --- */
+  --color-primary-0:   #000000;
+  --color-primary-10:  #00105C;
+  --color-primary-20:  #001E8C;
+  --color-primary-30:  #002EBF;
+  --color-primary-40:  #1A56DB;
+  --color-primary-50:  #4071F5;
+  --color-primary-60:  #6B8EFF;
+  --color-primary-70:  #98ABFF;
+  --color-primary-80:  #BEC6FF;
+  --color-primary-90:  #DFE0FF;
+  --color-primary-95:  #F0EEFF;
+  --color-primary-99:  #FAFBFF;
+  --color-primary-100: #FFFFFF;
+
+  /* --- Secondary: Slate --- */
+  --color-secondary-0:   #000000;
+  --color-secondary-10:  #191A2C;
+  --color-secondary-20:  #2E2F42;
+  --color-secondary-30:  #454658;
+  --color-secondary-40:  #5D5E72;
+  --color-secondary-50:  #76778B;
+  --color-secondary-60:  #9091A6;
+  --color-secondary-70:  #ABABC1;
+  --color-secondary-80:  #C7C6DC;
+  --color-secondary-90:  #E3E1F9;
+  --color-secondary-95:  #F1EFFF;
+  --color-secondary-99:  #FAFBFF;
+  --color-secondary-100: #FFFFFF;
+
+  /* --- Tertiary: Teal --- */
+  --color-tertiary-0:   #000000;
+  --color-tertiary-10:  #002020;
+  --color-tertiary-20:  #003737;
+  --color-tertiary-30:  #004F4F;
+  --color-tertiary-40:  #006A6A;
+  --color-tertiary-50:  #008585;
+  --color-tertiary-60:  #00A1A1;
+  --color-tertiary-70:  #00BDBD;
+  --color-tertiary-80:  #00D9D9;
+  --color-tertiary-90:  #9CF1F1;
+  --color-tertiary-95:  #CFF8F8;
+  --color-tertiary-99:  #F0FEFF;
+  --color-tertiary-100: #FFFFFF;
+
+  /* --- Error: Red --- */
+  --color-error-0:   #000000;
+  --color-error-10:  #410002;
+  --color-error-20:  #690005;
+  --color-error-30:  #93000A;
+  --color-error-40:  #BA1A1A;
+  --color-error-50:  #DE3730;
+  --color-error-60:  #FF5449;
+  --color-error-70:  #FF897D;
+  --color-error-80:  #FFB4AB;
+  --color-error-90:  #FFDAD6;
+  --color-error-95:  #FFEDEA;
+  --color-error-99:  #FFFBFF;
+  --color-error-100: #FFFFFF;
+
+  /* --- Neutral: Cool Gray --- */
+  --color-neutral-0:   #000000;
+  --color-neutral-10:  #1B1B1F;
+  --color-neutral-20:  #303034;
+  --color-neutral-30:  #47474B;
+  --color-neutral-40:  #5E5E62;
+  --color-neutral-50:  #77767A;
+  --color-neutral-60:  #919094;
+  --color-neutral-70:  #ACAAB0;
+  --color-neutral-80:  #C8C6CA;
+  --color-neutral-90:  #E4E1E6;
+  --color-neutral-95:  #F2EFF4;
+  --color-neutral-99:  #FFFBFF;
+  --color-neutral-100: #FFFFFF;
+
+  /* --- Neutral Variant: Slate Gray --- */
+  --color-neutral-variant-0:   #000000;
+  --color-neutral-variant-10:  #1B1B23;
+  --color-neutral-variant-20:  #303038;
+  --color-neutral-variant-30:  #46464F;
+  --color-neutral-variant-40:  #5E5D67;
+  --color-neutral-variant-50:  #777680;
+  --color-neutral-variant-60:  #918F9A;
+  --color-neutral-variant-70:  #ACAAB4;
+  --color-neutral-variant-80:  #C8C5D0;
+  --color-neutral-variant-90:  #E4E1EC;
+  --color-neutral-variant-95:  #F3EFFE;
+  --color-neutral-variant-99:  #FFFBFF;
+  --color-neutral-variant-100: #FFFFFF;
+
+  /* --- Warning: Amber (no M3 key color — custom) --- */
+  --color-warning-light-text:      #7A5900;
+  --color-warning-light-container: #FDEFC3;
+  --color-warning-light-on-text:   #FFFFFF;
+  --color-warning-dark-text:       #F0BF35;
+  --color-warning-dark-container:  #574100;
+  --color-warning-dark-on-text:    #3E2E00;
+
+}
+
+
+/* ============================================================
+   3. COLOR ROLES — LIGHT THEME
+   These are the ONLY color variables used in component styles.
+   ============================================================ */
+
+:root {
+
+  /* Primary */
+  --md-sys-color-primary:               var(--color-primary-40);
+  --md-sys-color-on-primary:            var(--color-primary-100);
+  --md-sys-color-primary-container:     var(--color-primary-90);
+  --md-sys-color-on-primary-container:  var(--color-primary-10);
+
+  /* Secondary */
+  --md-sys-color-secondary:               var(--color-secondary-40);
+  --md-sys-color-on-secondary:            var(--color-secondary-100);
+  --md-sys-color-secondary-container:     var(--color-secondary-90);
+  --md-sys-color-on-secondary-container:  var(--color-secondary-10);
+
+  /* Tertiary */
+  --md-sys-color-tertiary:               var(--color-tertiary-40);
+  --md-sys-color-on-tertiary:            var(--color-tertiary-100);
+  --md-sys-color-tertiary-container:     var(--color-tertiary-90);
+  --md-sys-color-on-tertiary-container:  var(--color-tertiary-10);
+
+  /* Error */
+  --md-sys-color-error:               var(--color-error-40);
+  --md-sys-color-on-error:            var(--color-error-100);
+  --md-sys-color-error-container:     var(--color-error-90);
+  --md-sys-color-on-error-container:  var(--color-error-10);
+
+  /* Background */
+  --md-sys-color-background:     var(--color-neutral-99);
+  --md-sys-color-on-background:  var(--color-neutral-10);
+
+  /* Surface */
+  --md-sys-color-surface:             var(--color-neutral-99);
+  --md-sys-color-on-surface:          var(--color-neutral-10);
+  --md-sys-color-surface-variant:     var(--color-neutral-variant-90);
+  --md-sys-color-on-surface-variant:  var(--color-neutral-variant-30);
+
+  /* Outline */
+  --md-sys-color-outline:          var(--color-neutral-variant-50);
+  --md-sys-color-outline-variant:  var(--color-neutral-variant-80);
+
+  /* Inverse */
+  --md-sys-color-inverse-surface:     var(--color-neutral-20);
+  --md-sys-color-inverse-on-surface:  var(--color-neutral-95);
+  --md-sys-color-inverse-primary:     var(--color-primary-80);
+
+  /* Misc */
+  --md-sys-color-scrim:   var(--color-neutral-0);
+  --md-sys-color-shadow:  var(--color-neutral-0);
+
+  /* Extended semantic roles — light */
+  --color-role-success:            var(--color-tertiary-40);
+  --color-role-on-success:         var(--color-tertiary-100);
+  --color-role-success-container:  var(--color-tertiary-90);
+
+  --color-role-warning:            var(--color-warning-light-text);
+  --color-role-on-warning:         var(--color-warning-light-on-text);
+  --color-role-warning-container:  var(--color-warning-light-container);
+
+  --color-role-strength-weak:    var(--color-error-40);
+  --color-role-strength-fair:    var(--color-warning-light-text);
+  --color-role-strength-strong:  var(--color-tertiary-40);
+
+}
+
+
+/* ============================================================
+   4. COLOR ROLES — DARK THEME  [data-theme="dark"]
+   ============================================================ */
+
+[data-theme="dark"] {
+
+  /* Primary */
+  --md-sys-color-primary:               var(--color-primary-80);
+  --md-sys-color-on-primary:            var(--color-primary-20);
+  --md-sys-color-primary-container:     var(--color-primary-30);
+  --md-sys-color-on-primary-container:  var(--color-primary-90);
+
+  /* Secondary */
+  --md-sys-color-secondary:               var(--color-secondary-80);
+  --md-sys-color-on-secondary:            var(--color-secondary-20);
+  --md-sys-color-secondary-container:     var(--color-secondary-30);
+  --md-sys-color-on-secondary-container:  var(--color-secondary-90);
+
+  /* Tertiary */
+  --md-sys-color-tertiary:               var(--color-tertiary-80);
+  --md-sys-color-on-tertiary:            var(--color-tertiary-20);
+  --md-sys-color-tertiary-container:     var(--color-tertiary-30);
+  --md-sys-color-on-tertiary-container:  var(--color-tertiary-90);
+
+  /* Error */
+  --md-sys-color-error:               var(--color-error-80);
+  --md-sys-color-on-error:            var(--color-error-20);
+  --md-sys-color-error-container:     var(--color-error-30);
+  --md-sys-color-on-error-container:  var(--color-error-90);
+
+  /* Background */
+  --md-sys-color-background:     var(--color-neutral-10);
+  --md-sys-color-on-background:  var(--color-neutral-90);
+
+  /* Surface */
+  --md-sys-color-surface:             var(--color-neutral-10);
+  --md-sys-color-on-surface:          var(--color-neutral-90);
+  --md-sys-color-surface-variant:     var(--color-neutral-variant-30);
+  --md-sys-color-on-surface-variant:  var(--color-neutral-variant-80);
+
+  /* Outline */
+  --md-sys-color-outline:          var(--color-neutral-variant-60);
+  --md-sys-color-outline-variant:  var(--color-neutral-variant-30);
+
+  /* Inverse */
+  --md-sys-color-inverse-surface:     var(--color-neutral-90);
+  --md-sys-color-inverse-on-surface:  var(--color-neutral-20);
+  --md-sys-color-inverse-primary:     var(--color-primary-40);
+
+  /* Misc */
+  --md-sys-color-scrim:   var(--color-neutral-0);
+  --md-sys-color-shadow:  var(--color-neutral-0);
+
+  /* Extended semantic roles — dark */
+  --color-role-success:            var(--color-tertiary-80);
+  --color-role-on-success:         var(--color-tertiary-20);
+  --color-role-success-container:  var(--color-tertiary-30);
+
+  --color-role-warning:            var(--color-warning-dark-text);
+  --color-role-on-warning:         var(--color-warning-dark-on-text);
+  --color-role-warning-container:  var(--color-warning-dark-container);
+
+  --color-role-strength-weak:    var(--color-error-80);
+  --color-role-strength-fair:    var(--color-warning-dark-text);
+  --color-role-strength-strong:  var(--color-tertiary-80);
+
+}
+
+
+/* ============================================================
+   5. SYSTEM DARK MODE OVERRIDE
+   Applies dark roles when no [data-theme] attribute is set
+   but the OS/browser prefers dark color scheme.
+   ============================================================ */
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+
+    /* Primary */
+    --md-sys-color-primary:               var(--color-primary-80);
+    --md-sys-color-on-primary:            var(--color-primary-20);
+    --md-sys-color-primary-container:     var(--color-primary-30);
+    --md-sys-color-on-primary-container:  var(--color-primary-90);
+
+    /* Secondary */
+    --md-sys-color-secondary:               var(--color-secondary-80);
+    --md-sys-color-on-secondary:            var(--color-secondary-20);
+    --md-sys-color-secondary-container:     var(--color-secondary-30);
+    --md-sys-color-on-secondary-container:  var(--color-secondary-90);
+
+    /* Tertiary */
+    --md-sys-color-tertiary:               var(--color-tertiary-80);
+    --md-sys-color-on-tertiary:            var(--color-tertiary-20);
+    --md-sys-color-tertiary-container:     var(--color-tertiary-30);
+    --md-sys-color-on-tertiary-container:  var(--color-tertiary-90);
+
+    /* Error */
+    --md-sys-color-error:               var(--color-error-80);
+    --md-sys-color-on-error:            var(--color-error-20);
+    --md-sys-color-error-container:     var(--color-error-30);
+    --md-sys-color-on-error-container:  var(--color-error-90);
+
+    /* Background */
+    --md-sys-color-background:     var(--color-neutral-10);
+    --md-sys-color-on-background:  var(--color-neutral-90);
+
+    /* Surface */
+    --md-sys-color-surface:             var(--color-neutral-10);
+    --md-sys-color-on-surface:          var(--color-neutral-90);
+    --md-sys-color-surface-variant:     var(--color-neutral-variant-30);
+    --md-sys-color-on-surface-variant:  var(--color-neutral-variant-80);
+
+    /* Outline */
+    --md-sys-color-outline:          var(--color-neutral-variant-60);
+    --md-sys-color-outline-variant:  var(--color-neutral-variant-30);
+
+    /* Inverse */
+    --md-sys-color-inverse-surface:     var(--color-neutral-90);
+    --md-sys-color-inverse-on-surface:  var(--color-neutral-20);
+    --md-sys-color-inverse-primary:     var(--color-primary-40);
+
+    /* Misc */
+    --md-sys-color-scrim:   var(--color-neutral-0);
+    --md-sys-color-shadow:  var(--color-neutral-0);
+
+    /* Extended semantic roles — dark */
+    --color-role-success:            var(--color-tertiary-80);
+    --color-role-on-success:         var(--color-tertiary-20);
+    --color-role-success-container:  var(--color-tertiary-30);
+
+    --color-role-warning:            var(--color-warning-dark-text);
+    --color-role-on-warning:         var(--color-warning-dark-on-text);
+    --color-role-warning-container:  var(--color-warning-dark-container);
+
+    --color-role-strength-weak:    var(--color-error-80);
+    --color-role-strength-fair:    var(--color-warning-dark-text);
+    --color-role-strength-strong:  var(--color-tertiary-80);
+
+  }
+}
+
+
+/* ============================================================
+   7. TYPOGRAPHY SCALE
+   All font sizes use clamp() for fluid responsiveness.
+   Format: clamp(mobile-size, viewport-relative, desktop-size)
+   ============================================================ */
+
+:root {
+
+  --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+
+  --font-weight-regular:   400;
+  --font-weight-medium:    500;
+  --font-weight-semibold:  600;
+  --font-weight-bold:      700;
+
+  /* Display */
+  --md-sys-typescale-display-large-size:           clamp(3rem,    calc(2.5rem + 2.5vw),  3.5625rem);
+  --md-sys-typescale-display-large-line-height:    1.12;
+  --md-sys-typescale-display-large-weight:         var(--font-weight-regular);
+  --md-sys-typescale-display-large-tracking:       -0.015625em;
+
+  --md-sys-typescale-display-medium-size:          clamp(2.5rem,  calc(2rem + 2.5vw),    2.8125rem);
+  --md-sys-typescale-display-medium-line-height:   1.16;
+  --md-sys-typescale-display-medium-weight:        var(--font-weight-regular);
+  --md-sys-typescale-display-medium-tracking:      0em;
+
+  --md-sys-typescale-display-small-size:           clamp(2rem,    calc(1.75rem + 1.5vw), 2.25rem);
+  --md-sys-typescale-display-small-line-height:    1.22;
+  --md-sys-typescale-display-small-weight:         var(--font-weight-regular);
+  --md-sys-typescale-display-small-tracking:       0em;
+
+  /* Headline */
+  --md-sys-typescale-headline-large-size:          clamp(1.75rem, calc(1.5rem + 1.5vw),  2rem);
+  --md-sys-typescale-headline-large-line-height:   1.25;
+  --md-sys-typescale-headline-large-weight:        var(--font-weight-regular);
+  --md-sys-typescale-headline-large-tracking:      0em;
+
+  --md-sys-typescale-headline-medium-size:         clamp(1.375rem, calc(1.25rem + 1vw),  1.75rem);
+  --md-sys-typescale-headline-medium-line-height:  1.29;
+  --md-sys-typescale-headline-medium-weight:       var(--font-weight-regular);
+  --md-sys-typescale-headline-medium-tracking:     0em;
+
+  --md-sys-typescale-headline-small-size:          clamp(1.125rem, calc(1rem + 0.75vw),  1.5rem);
+  --md-sys-typescale-headline-small-line-height:   1.33;
+  --md-sys-typescale-headline-small-weight:        var(--font-weight-regular);
+  --md-sys-typescale-headline-small-tracking:      0em;
+
+  /* Title */
+  --md-sys-typescale-title-large-size:             clamp(1.125rem, calc(1rem + 0.625vw), 1.375rem);
+  --md-sys-typescale-title-large-line-height:      1.27;
+  --md-sys-typescale-title-large-weight:           var(--font-weight-regular);
+  --md-sys-typescale-title-large-tracking:         0em;
+
+  --md-sys-typescale-title-medium-size:            clamp(0.9375rem, calc(0.875rem + 0.375vw), 1rem);
+  --md-sys-typescale-title-medium-line-height:     1.5;
+  --md-sys-typescale-title-medium-weight:          var(--font-weight-medium);
+  --md-sys-typescale-title-medium-tracking:        0.009375em;
+
+  --md-sys-typescale-title-small-size:             clamp(0.8125rem, calc(0.8125rem + 0.25vw), 0.875rem);
+  --md-sys-typescale-title-small-line-height:      1.43;
+  --md-sys-typescale-title-small-weight:           var(--font-weight-medium);
+  --md-sys-typescale-title-small-tracking:         0.00625em;
+
+  /* Label */
+  --md-sys-typescale-label-large-size:             clamp(0.8125rem, calc(0.8125rem + 0.25vw), 0.875rem);
+  --md-sys-typescale-label-large-line-height:      1.43;
+  --md-sys-typescale-label-large-weight:           var(--font-weight-medium);
+  --md-sys-typescale-label-large-tracking:         0.00625em;
+
+  --md-sys-typescale-label-medium-size:            clamp(0.6875rem, calc(0.6875rem + 0.125vw), 0.75rem);
+  --md-sys-typescale-label-medium-line-height:     1.33;
+  --md-sys-typescale-label-medium-weight:          var(--font-weight-medium);
+  --md-sys-typescale-label-medium-tracking:        0.03125em;
+
+  --md-sys-typescale-label-small-size:             clamp(0.625rem, calc(0.625rem + 0.0625vw), 0.6875rem);
+  --md-sys-typescale-label-small-line-height:      1.45;
+  --md-sys-typescale-label-small-weight:           var(--font-weight-medium);
+  --md-sys-typescale-label-small-tracking:         0.03125em;
+
+  /* Body */
+  --md-sys-typescale-body-large-size:              clamp(0.9375rem, calc(0.9375rem + 0.25vw), 1rem);
+  --md-sys-typescale-body-large-line-height:       1.5;
+  --md-sys-typescale-body-large-weight:            var(--font-weight-regular);
+  --md-sys-typescale-body-large-tracking:          0.03125em;
+
+  --md-sys-typescale-body-medium-size:             clamp(0.8125rem, calc(0.8125rem + 0.125vw), 0.875rem);
+  --md-sys-typescale-body-medium-line-height:      1.43;
+  --md-sys-typescale-body-medium-weight:           var(--font-weight-regular);
+  --md-sys-typescale-body-medium-tracking:         0.015625em;
+
+  --md-sys-typescale-body-small-size:              clamp(0.6875rem, calc(0.6875rem + 0.0625vw), 0.75rem);
+  --md-sys-typescale-body-small-line-height:       1.33;
+  --md-sys-typescale-body-small-weight:            var(--font-weight-regular);
+  --md-sys-typescale-body-small-tracking:          0.025em;
+
+}
+
+
+/* ============================================================
+   8. SPACING
+   8-point base grid. All values are multiples of 4px.
+   ============================================================ */
+
+:root {
+
+  --space-1:  0.25rem;  /* 4px  */
+  --space-2:  0.5rem;   /* 8px  */
+  --space-3:  0.75rem;  /* 12px */
+  --space-4:  1rem;     /* 16px */
+  --space-5:  1.25rem;  /* 20px */
+  --space-6:  1.5rem;   /* 24px */
+  --space-8:  2rem;     /* 32px */
+  --space-10: 2.5rem;   /* 40px */
+  --space-12: 3rem;     /* 48px */
+  --space-16: 4rem;     /* 64px */
+  --space-20: 5rem;     /* 80px */
+
+}
+
+
+/* ============================================================
+   9. BORDER RADIUS
+   ============================================================ */
+
+:root {
+
+  --radius-xs:   0.25rem;   /* 4px  — chips, small badges */
+  --radius-sm:   0.5rem;    /* 8px  — inputs             */
+  --radius-md:   0.75rem;   /* 12px — buttons            */
+  --radius-lg:   1rem;      /* 16px — cards, modals      */
+  --radius-xl:   1.5rem;    /* 24px — large surfaces     */
+  --radius-full: 9999px;    /* pills, avatars            */
+
+}
+
+
+/* ============================================================
+   10. ELEVATION (Box Shadow)
+   Uses --md-sys-color-shadow (black) at varying opacities.
+   ============================================================ */
+
+:root {
+
+  --elevation-0: none;
+
+  --elevation-1:
+    0 1px 2px   rgba(0, 0, 0, 0.30),
+    0 1px 3px 1px rgba(0, 0, 0, 0.15);
+
+  --elevation-2:
+    0 1px 2px   rgba(0, 0, 0, 0.30),
+    0 2px 6px 2px rgba(0, 0, 0, 0.15);
+
+  --elevation-3:
+    0 4px 8px 3px rgba(0, 0, 0, 0.15),
+    0 1px 3px     rgba(0, 0, 0, 0.30);
+
+  --elevation-4:
+    0 6px 10px 4px rgba(0, 0, 0, 0.15),
+    0 2px 3px      rgba(0, 0, 0, 0.30);
+
+  --elevation-5:
+    0 8px 12px 6px rgba(0, 0, 0, 0.15),
+    0 4px 4px      rgba(0, 0, 0, 0.30);
+
+}
+
+
+/* ============================================================
+   11. MOTION & TRANSITIONS
+   Material 3 duration and easing tokens.
+   ============================================================ */
+
+:root {
+
+  /* Duration */
+  --duration-short-1:  50ms;
+  --duration-short-2:  100ms;
+  --duration-short-3:  150ms;
+  --duration-short-4:  200ms;
+  --duration-medium-1: 250ms;
+  --duration-medium-2: 300ms;
+  --duration-medium-3: 350ms;
+  --duration-medium-4: 400ms;
+  --duration-long-1:   450ms;
+
+  /* Easing */
+  --easing-standard:            cubic-bezier(0.2, 0, 0, 1);
+  --easing-standard-decelerate: cubic-bezier(0, 0, 0, 1);
+  --easing-standard-accelerate: cubic-bezier(0.3, 0, 1, 1);
+  --easing-emphasized:          cubic-bezier(0.2, 0, 0, 1);
+
+  /* Shorthand transition presets */
+  --transition-color:     color            var(--duration-short-4) var(--easing-standard),
+                          background-color var(--duration-short-4) var(--easing-standard),
+                          border-color     var(--duration-short-4) var(--easing-standard);
+
+  --transition-shadow:    box-shadow var(--duration-medium-1) var(--easing-standard);
+
+  --transition-transform: transform   var(--duration-medium-2) var(--easing-standard);
+
+  --transition-opacity:   opacity     var(--duration-short-3) var(--easing-standard);
+
+}
+
+
+/* ============================================================
+   12. Z-INDEX
+   ============================================================ */
+
+:root {
+
+  --z-below:    -1;
+  --z-base:      0;
+  --z-raised:   10;
+  --z-dropdown: 100;
+  --z-sticky:   200;
+  --z-overlay:  300;
+  --z-modal:    400;
+  --z-toast:    500;
+  --z-tooltip:  600;
+
+}
+
+
+/* ============================================================
+   13. BREAKPOINTS
+   CSS custom properties cannot be used directly inside
+   @media queries, but these are defined for JS consumption
+   and documentation. Use the values directly in @media rules.
+
+   --bp-sm: 640px
+   --bp-md: 768px
+   --bp-lg: 1024px
+   --bp-xl: 1280px
+   ============================================================ */
+
+:root {
+
+  --bp-sm:  640px;
+  --bp-md:  768px;
+  --bp-lg:  1024px;
+  --bp-xl:  1280px;
+
+}
