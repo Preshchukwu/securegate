@@ -1,12 +1,20 @@
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
+import { render } from "@react-email/render";
 import { VerificationEmail } from "@/emails/VerificationEmail";
 import { PasswordResetEmail } from "@/emails/PasswordResetEmail";
 
-const FROM = "SecureGate <onboarding@resend.dev>";
+const FROM = `"SecureGate" <${process.env.SMTP_USER}>`;
 
-function getResend() {
-  if (!process.env.RESEND_API_KEY) throw new Error("RESEND_API_KEY is not set");
-  return new Resend(process.env.RESEND_API_KEY);
+function getTransporter() {
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST ?? "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT ?? 587),
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
 }
 
 export async function sendVerificationEmail(
@@ -15,12 +23,13 @@ export async function sendVerificationEmail(
   name: string
 ): Promise<void> {
   const verifyUrl = `${process.env.NEXTAUTH_URL}/verify-email/${token}`;
+  const html = await render(VerificationEmail({ name, verifyUrl }));
 
-  await getResend().emails.send({
+  await getTransporter().sendMail({
     from: FROM,
     to: email,
     subject: "Verify your SecureGate email",
-    react: VerificationEmail({ name, verifyUrl }),
+    html,
   });
 }
 
@@ -30,11 +39,12 @@ export async function sendPasswordResetEmail(
   name: string
 ): Promise<void> {
   const resetUrl = `${process.env.NEXTAUTH_URL}/reset-password/${token}`;
+  const html = await render(PasswordResetEmail({ name, resetUrl }));
 
-  await getResend().emails.send({
+  await getTransporter().sendMail({
     from: FROM,
     to: email,
     subject: "Reset your SecureGate password",
-    react: PasswordResetEmail({ name, resetUrl }),
+    html,
   });
 }
